@@ -1,0 +1,40 @@
+{
+  "name": "nextjs-mastra",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@ai-sdk/amazon-bedrock": "^2.1.5",
+    "@aws-sdk/credential-providers": "^3.768.0",
+    "@mastra/core": "^0.6.3",
+    "@monaco-editor/react": "^4.7.0",
+    "@stacks/connect": "^8.2.4",
+    "framer-motion": "^12.34.0",
+    "jszip": "^3.10.1",
+    "langfuse-vercel": "^3.37.0",
+    "lucide-react": "^0.563.0",
+    "next": "15.2.3",
+    "openai": "^6.21.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "x402-stacks": "^2.0.1",
+    "zustand": "^5.0.11"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
+    "@types/jszip": "^3.4.1",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "15.2.3",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
