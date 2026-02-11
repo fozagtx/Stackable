@@ -11,7 +11,17 @@ export type PaymentState =
 
 export type ActiveFile = "skill" | "metadata";
 
-interface ForgeState {
+export interface ChatMessage {
+  id: string;
+  role: "user" | "assistant";
+  content: string;
+  timestamp: number;
+}
+
+interface StackableState {
+  // Chat
+  chatMessages: ChatMessage[];
+
   // Editor
   skillContent: string;
   metadata: { name: string; description: string; version: string };
@@ -29,6 +39,7 @@ interface ForgeState {
   walletAddress: string | null;
 
   // Actions
+  addChatMessage: (message: Omit<ChatMessage, "id" | "timestamp">) => void;
   setSkillContent: (content: string) => void;
   setMetadata: (metadata: { name: string; description: string; version: string }) => void;
   setActiveFile: (file: ActiveFile) => void;
@@ -39,9 +50,11 @@ interface ForgeState {
   setSkillId: (id: string | null) => void;
   setWalletAddress: (address: string | null) => void;
   resetPayment: () => void;
+  resetAll: () => void;
 }
 
-export const useForgeStore = create<ForgeState>((set) => ({
+export const useStackableStore = create<StackableState>((set) => ({
+  chatMessages: [],
   skillContent: "",
   metadata: { name: "", description: "", version: "1.0.0" },
   activeFile: "skill",
@@ -52,6 +65,14 @@ export const useForgeStore = create<ForgeState>((set) => ({
   paymentError: null,
   skillId: null,
   walletAddress: null,
+
+  addChatMessage: (message) =>
+    set((state) => ({
+      chatMessages: [
+        ...state.chatMessages,
+        { ...message, id: crypto.randomUUID(), timestamp: Date.now() },
+      ],
+    })),
 
   setSkillContent: (content) =>
     set({
@@ -69,4 +90,20 @@ export const useForgeStore = create<ForgeState>((set) => ({
   setWalletAddress: (address) => set({ walletAddress: address }),
   resetPayment: () =>
     set({ paymentState: "idle", paymentError: null }),
+  resetAll: () => {
+    try { localStorage.removeItem("stackable-draft"); } catch {}
+    set({
+      chatMessages: [],
+      skillContent: "",
+      metadata: { name: "", description: "", version: "1.0.0" },
+      activeFile: "skill",
+      isGenerating: false,
+      generateError: null,
+      validation: { valid: true, errors: [], warnings: [] },
+      paymentState: "idle",
+      paymentError: null,
+      skillId: null,
+      walletAddress: null,
+    });
+  },
 }));

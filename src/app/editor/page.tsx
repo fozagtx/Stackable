@@ -1,5 +1,5 @@
 import { EditorPage } from "./page.client";
 
-export default function ForgeEditorPage() {
+export default function StackableEditorPage() {
   return <EditorPage />;
 }

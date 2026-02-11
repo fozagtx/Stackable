@@ -1,40 +1,57 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@font-face {
+  font-family: "Mona Sans";
+  src: url("https://github.githubassets.com/static/fonts/mona-sans/MonaSans.woff2")
+    format("woff2 supports variations"),
+    url("https://github.githubassets.com/static/fonts/mona-sans/MonaSans.woff2")
+    format("woff2-variations");
+  font-weight: 200 900;
+  font-display: swap;
+  font-style: normal;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter, Inter, sans-serif);
+  --font-mono: var(--font-jetbrains, "JetBrains Mono", monospace);
+  --font-heading: "Mona Sans", var(--font-inter, Inter, sans-serif);
 
-  /* StacksSkills design tokens */
-  --color-forge-orange: #F7931A;
-  --color-forge-purple: #8B5CF6;
-  --color-forge-charcoal: #0F0F14;
-  --color-forge-surface: #1A1A24;
-  --color-forge-border: #2A2A3A;
-  --color-forge-text: #E4E4ED;
-  --color-forge-muted: #8B8BA0;
-}
+  /* Content Rewards palette */
+  --color-stackable-accent: #FF6207;
+  --color-stackable-accent-soft: #FF9E59;
+  --color-stackable-charcoal: #F7F7F7;
+  --color-stackable-surface: #FFFFFF;
+  --color-stackable-border: #E3E3E3;
+  --color-stackable-text: #0A0A0A;
+  --color-stackable-muted: #6B6B6B;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Shadows */
+  --shadow-card: 0.5px 0.47px 1.26px rgba(17,17,18,0.01),
+    1.32px 1.2px 3.22px rgba(17,17,18,0.02),
+    2.65px 2.41px 6.46px rgba(17,17,18,0.02),
+    5.03px 4.57px 12.24px rgba(17,17,18,0.02),
+    10.01px 9.09px 24.34px rgba(17,17,18,0.04),
+    22px 20px 53.52px rgba(17,17,18,0.07);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: #F7F7F7;
+  color: #0A0A0A;
 }
 
-/* StacksSkills layout */
-.forge-layout {
+.stackable-layout {
   font-family: var(--font-inter, Inter, sans-serif);
+}
+
+/* Utility: Content Rewards card shadow */
+.shadow-cr {
+  box-shadow: var(--shadow-card);
+}
+
+/* Orange halftone gradient for feature cards */
+.halftone-orange {
+  background:
+    radial-gradient(circle, rgba(255,98,7,0.25) 1.2px, transparent 1.2px),
+    linear-gradient(160deg, rgba(255,98,7,0.18) 0%, rgba(255,158,89,0.1) 40%, rgba(255,255,255,0) 70%);
+  background-size: 6px 6px, 100% 100%;
 }

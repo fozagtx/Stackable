@@ -1,13 +1,13 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useForgeStore } from "../store";
+import { useStackableStore } from "../store";
 
 const Editor = dynamic(() => import("@monaco-editor/react"), { ssr: false });
 
 export function SkillEditor() {
   const { skillContent, metadata, activeFile, setSkillContent, setMetadata } =
-    useForgeStore();
+    useStackableStore();
 
   const isMetadataView = activeFile === "metadata";
   const metadataJson = JSON.stringify(metadata, null, 2);
@@ -38,7 +38,7 @@ export function SkillEditor() {
         language={isMetadataView ? "json" : "markdown"}
         value={isMetadataView ? metadataJson : skillContent}
         onChange={handleEditorChange}
-        theme="vs-dark"
+        theme="light"
         options={{
           fontSize: 14,
           fontFamily: "var(--font-jetbrains), JetBrains Mono, monospace",

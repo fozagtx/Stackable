@@ -2,7 +2,7 @@ import { createVerifier } from "x402-stacks";
 
 const FACILITATOR_URL =
   process.env.X402_FACILITATOR_URL || "https://facilitator.stacksx402.com";
-const WALLET_ADDRESS = process.env.SKILLFORGE_WALLET_ADDRESS || "";
+const WALLET_ADDRESS = process.env.STACKABLE_WALLET_ADDRESS || "";
 const NETWORK = (process.env.X402_NETWORK || "stacks:2147483648") as `stacks:${string}`;
 const SKILL_PRICE = process.env.SKILL_PRICE_STX || "2000000"; // 2 STX in microSTX
 

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Hammer, Code2, Zap, Package, ArrowRight } from "lucide-react";
+import { Code2, Zap, Package, ArrowRight } from "lucide-react";
 
 const features = [
   {
@@ -25,48 +25,139 @@ const features = [
   },
 ];
 
-const templates = [
-  { name: "Document Processor", emoji: "📄" },
-  { name: "API Integration", emoji: "🔌" },
-  { name: "Data Analyzer", emoji: "📊" },
-  { name: "Custom Tool Builder", emoji: "🔧" },
-];
-
 export function Landing() {
   return (
     <main className="flex flex-col items-center">
-      {/* Hero */}
-      <section className="w-full max-w-5xl px-4 pt-20 pb-16 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <div className="flex items-center justify-center gap-3 mb-6">
-            <Hammer className="w-10 h-10 text-forge-orange" />
-            <h1 className="text-5xl font-bold font-[family-name:var(--font-jetbrains)] bg-gradient-to-r from-forge-orange to-forge-purple bg-clip-text text-transparent">
-              StacksSkills
-            </h1>
+      {/* Nav */}
+      <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 absolute top-0 left-0 right-0 z-10">
+        <nav className="bg-stackable-surface/90 backdrop-blur-sm border border-stackable-border rounded-full px-6 shadow-cr">
+          <div className="flex items-center justify-between h-14">
+            <Link href="/" className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-stackable-accent flex items-center justify-center">
+                <span className="text-white font-bold text-sm">S</span>
+              </div>
+              <span className="text-base font-extrabold font-[family-name:var(--font-heading)] text-stackable-text uppercase tracking-wide">
+                Stackable
+              </span>
+            </Link>
+            <Link
+              href="/editor"
+              className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-stackable-accent text-white text-sm font-medium rounded-full hover:bg-stackable-accent/90 transition-all"
+            >
+              Start Building
+              <span className="text-white/80">→</span>
+            </Link>
           </div>
-          <p className="text-xl text-forge-muted max-w-2xl mx-auto mb-4">
-            Build Claude Code skills with AI. Edit in Monaco. Download as a
-            package.
-          </p>
-          <p className="text-sm text-forge-muted/60 mb-10">
-            Powered by GPT-4o generation + x402 Stacks payment protocol
-          </p>
-          <Link
-            href="/editor"
-            className="inline-flex items-center gap-2 px-8 py-3 bg-forge-orange text-forge-charcoal font-semibold rounded-lg hover:bg-forge-orange/90 transition-all shadow-lg shadow-forge-orange/20"
+        </nav>
+      </div>
+
+      {/* Hero with warm gradient bg */}
+      <section className="w-full bg-[#F6EDE3]">
+        <div className="max-w-5xl mx-auto px-4 pt-28 pb-20 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
           >
-            Start Building
-            <ArrowRight className="w-4 h-4" />
-          </Link>
-        </motion.div>
+            <h1 className="text-6xl font-extrabold font-[family-name:var(--font-heading)] text-stackable-text leading-tight mb-6">
+              Build Claude Code Skills
+            </h1>
+            <p className="text-lg text-stackable-muted max-w-xl mx-auto mb-4">
+              Create, edit, and package Claude Code skills with AI assistance.
+              Powered by Stacks.
+            </p>
+            <p className="text-sm text-stackable-muted/60 mb-10">
+              GPT-4o generation + x402 Stacks payment protocol
+            </p>
+            <div className="flex items-center justify-center gap-4">
+              <Link
+                href="/editor"
+                className="inline-flex items-center justify-center gap-2.5 px-10 py-4 bg-stackable-accent text-white font-medium rounded-full hover:bg-stackable-accent/90 transition-all"
+              >
+                Start Building
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link
+                href="/editor"
+                className="inline-flex items-center justify-center gap-2.5 px-10 py-4 bg-stackable-surface text-stackable-text font-medium rounded-full shadow-cr hover:shadow-lg transition-all"
+              >
+                Explore Templates
+              </Link>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* How it works — prioritized */}
+      <section className="w-full max-w-5xl px-4 pt-20 pb-20">
+        <div className="text-center mb-12">
+          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-stackable-text text-white text-xs font-medium mb-6">
+            <span className="opacity-60">◎</span>
+            How it Works
+            <span className="opacity-60">◎</span>
+          </span>
+          <h2 className="text-4xl font-extrabold font-[family-name:var(--font-heading)] text-stackable-text mb-4">
+            Build Skills in 3 Simple Steps
+          </h2>
+          <p className="text-base text-stackable-muted max-w-lg mx-auto">
+            From description to download, your ideas turn into Claude Code
+            skills with a smooth and transparent process.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {[
+            {
+              step: "1",
+              title: "Describe",
+              desc: "Tell AI what skill you want to build",
+              icon: "💬",
+            },
+            {
+              step: "2",
+              title: "Edit",
+              desc: "Refine the generated skill in Monaco Editor",
+              icon: "✏️",
+            },
+            {
+              step: "3",
+              title: "Download",
+              desc: "Pay with STX and get your skill package",
+              icon: "📦",
+            },
+          ].map((item) => (
+            <div key={item.step} className="rounded-[20px] bg-stackable-surface shadow-cr overflow-hidden">
+              <div className="halftone-orange h-32 flex items-center justify-center">
+                <span className="text-4xl">{item.icon}</span>
+              </div>
+              <div className="p-5 pt-4 text-center">
+                <span className="inline-block px-3 py-1 rounded-full bg-stackable-accent text-white text-xs font-bold mb-3">
+                  Step {item.step}
+                </span>
+                <h3 className="text-base font-bold font-[family-name:var(--font-heading)] mb-1.5">
+                  {item.title}
+                </h3>
+                <p className="text-sm text-stackable-muted">{item.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
       </section>
 
       {/* Features */}
-      <section className="w-full max-w-5xl px-4 pb-16">
+      <section className="w-full max-w-5xl px-4 pb-20">
+        <div className="text-center mb-12">
+          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-stackable-text text-white text-xs font-medium mb-6">
+            <span className="opacity-60">◎</span>
+            Features
+            <span className="opacity-60">◎</span>
+          </span>
+          <h2 className="text-4xl font-extrabold font-[family-name:var(--font-heading)] text-stackable-text mb-4">
+            Everything You Need to Build
+          </h2>
+          <p className="text-base text-stackable-muted max-w-lg mx-auto">
+            Powerful tools that take you from idea to production-ready Claude Code skill in minutes, not hours.
+          </p>
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {features.map((feature, i) => (
             <motion.div
@@ -74,73 +165,26 @@ export function Landing() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 * (i + 1) }}
-              className="p-6 rounded-xl border border-forge-border bg-forge-surface/50 hover:border-forge-orange/30 transition-colors"
+              className="rounded-[20px] bg-stackable-surface shadow-cr hover:shadow-lg transition-shadow overflow-hidden"
             >
-              <feature.icon className="w-8 h-8 text-forge-purple mb-4" />
-              <h3 className="text-lg font-semibold mb-2 font-[family-name:var(--font-jetbrains)]">
-                {feature.title}
-              </h3>
-              <p className="text-sm text-forge-muted">{feature.description}</p>
+              <div className="halftone-orange h-40 flex items-center justify-center relative">
+                <div className="w-14 h-14 rounded-2xl bg-stackable-accent shadow-lg flex items-center justify-center">
+                  <feature.icon className="w-7 h-7 text-white" />
+                </div>
+              </div>
+              <div className="p-5 pt-4 text-center">
+                <h3 className="text-base font-bold font-[family-name:var(--font-heading)] mb-1.5">
+                  {feature.title}
+                </h3>
+                <p className="text-sm text-stackable-muted leading-relaxed">
+                  {feature.description}
+                </p>
+              </div>
             </motion.div>
           ))}
         </div>
       </section>
 
-      {/* Templates Preview */}
-      <section className="w-full max-w-5xl px-4 pb-20">
-        <h2 className="text-2xl font-bold font-[family-name:var(--font-jetbrains)] text-center mb-8">
-          Start from a Template
-        </h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {templates.map((template) => (
-            <Link
-              key={template.name}
-              href="/editor"
-              className="flex flex-col items-center gap-2 p-4 rounded-lg border border-forge-border bg-forge-surface/30 hover:border-forge-purple/50 hover:bg-forge-surface/60 transition-all text-center"
-            >
-              <span className="text-3xl">{template.emoji}</span>
-              <span className="text-sm font-medium">{template.name}</span>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      {/* How it works */}
-      <section className="w-full max-w-5xl px-4 pb-20">
-        <h2 className="text-2xl font-bold font-[family-name:var(--font-jetbrains)] text-center mb-10">
-          How It Works
-        </h2>
-        <div className="flex flex-col md:flex-row items-start justify-between gap-8">
-          {[
-            {
-              step: "1",
-              title: "Describe",
-              desc: "Tell AI what skill you want to build",
-            },
-            {
-              step: "2",
-              title: "Edit",
-              desc: "Refine the generated skill in Monaco Editor",
-            },
-            {
-              step: "3",
-              title: "Download",
-              desc: "Pay with STX and get your skill package",
-            },
-          ].map((item, i) => (
-            <div key={item.step} className="flex-1 text-center">
-              <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-forge-orange/10 border border-forge-orange/30 flex items-center justify-center text-forge-orange font-bold font-[family-name:var(--font-jetbrains)]">
-                {item.step}
-              </div>
-              <h3 className="font-semibold mb-1">{item.title}</h3>
-              <p className="text-sm text-forge-muted">{item.desc}</p>
-              {i < 2 && (
-                <ArrowRight className="w-5 h-5 text-forge-muted/30 mx-auto mt-4 hidden md:block rotate-0" />
-              )}
-            </div>
-          ))}
-        </div>
-      </section>
     </main>
   );
 }

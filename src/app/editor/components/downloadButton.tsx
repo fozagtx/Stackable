@@ -1,7 +1,7 @@
 "use client";
 
 import { Download, Loader2 } from "lucide-react";
-import { useForgeStore } from "../store";
+import { useStackableStore } from "../store";
 
 export function DownloadButton() {
   const {
@@ -11,7 +11,7 @@ export function DownloadButton() {
     paymentState,
     setPaymentState,
     setSkillId,
-  } = useForgeStore();
+  } = useStackableStore();
 
   const canDownload = skillContent.trim() && validation.valid;
 
@@ -46,7 +46,7 @@ export function DownloadButton() {
     <button
       onClick={handleDownload}
       disabled={!canDownload || paymentState === "connecting"}
-      className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-forge-orange text-forge-charcoal font-semibold text-sm rounded-lg hover:bg-forge-orange/90 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-lg shadow-forge-orange/20"
+      className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-stackable-accent text-white font-semibold text-sm rounded-full hover:bg-stackable-accent/90 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-lg shadow-stackable-accent/20"
     >
       {paymentState === "connecting" ? (
         <Loader2 className="w-4 h-4 animate-spin" />

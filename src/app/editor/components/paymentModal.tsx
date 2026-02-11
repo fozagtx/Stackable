@@ -13,9 +13,9 @@ import {
   FileJson,
   FileText,
 } from "lucide-react";
-import { useForgeStore } from "../store";
+import { useStackableStore } from "../store";
 
-const LOCALSTORAGE_KEY = "stacksskills-draft";
+const LOCALSTORAGE_KEY = "stackable-draft";
 
 export function PaymentModal() {
   const {
@@ -29,7 +29,7 @@ export function PaymentModal() {
     setWalletAddress,
     resetPayment,
     setSkillContent,
-  } = useForgeStore();
+  } = useStackableStore();
 
   const [selectedAsset] = useState("STX");
 
@@ -180,16 +180,16 @@ export function PaymentModal() {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.95 }}
-          className="w-full max-w-md bg-forge-surface border border-forge-border rounded-xl shadow-2xl"
+          className="w-full max-w-md bg-stackable-surface border border-stackable-border rounded-[20px] shadow-2xl"
         >
           {/* Header */}
-          <div className="flex items-center justify-between p-4 border-b border-forge-border">
-            <h2 className="text-lg font-semibold font-[family-name:var(--font-jetbrains)]">
+          <div className="flex items-center justify-between p-4 border-b border-stackable-border">
+            <h2 className="text-lg font-semibold font-[family-name:var(--font-heading)]">
               {paymentState === "confirmed" ? "Download Complete" : "Download Package"}
             </h2>
             <button
               onClick={handleClose}
-              className="p-1 text-forge-muted hover:text-forge-text transition-colors rounded"
+              className="p-1 text-stackable-muted hover:text-stackable-text transition-colors rounded"
             >
               <X className="w-5 h-5" />
             </button>
@@ -200,20 +200,20 @@ export function PaymentModal() {
             {/* Package contents preview */}
             {paymentState !== "confirmed" && (
               <div className="mb-6">
-                <p className="text-xs text-forge-muted mb-3 uppercase tracking-wider">
+                <p className="text-xs text-stackable-muted mb-3 uppercase tracking-wider">
                   Package Contents
                 </p>
                 <div className="space-y-2">
-                  <div className="flex items-center gap-2 text-sm text-forge-text/80">
-                    <FileCode2 className="w-4 h-4 text-forge-purple" />
+                  <div className="flex items-center gap-2 text-sm text-stackable-text/80">
+                    <FileCode2 className="w-4 h-4 text-stackable-accent-soft" />
                     SKILL.md
                   </div>
-                  <div className="flex items-center gap-2 text-sm text-forge-text/80">
-                    <FileJson className="w-4 h-4 text-forge-orange" />
+                  <div className="flex items-center gap-2 text-sm text-stackable-text/80">
+                    <FileJson className="w-4 h-4 text-stackable-accent" />
                     metadata.json
                   </div>
-                  <div className="flex items-center gap-2 text-sm text-forge-text/80">
-                    <FileText className="w-4 h-4 text-forge-muted" />
+                  <div className="flex items-center gap-2 text-sm text-stackable-text/80">
+                    <FileText className="w-4 h-4 text-stackable-muted" />
                     README.md
                   </div>
                 </div>
@@ -222,14 +222,14 @@ export function PaymentModal() {
 
             {/* Price */}
             {paymentState !== "confirmed" && (
-              <div className="mb-6 p-4 rounded-lg bg-forge-charcoal border border-forge-border">
+              <div className="mb-6 p-4 rounded-[14px] bg-stackable-charcoal border border-stackable-border">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-forge-muted">Price</span>
-                  <span className="text-lg font-bold font-[family-name:var(--font-jetbrains)] text-forge-orange">
+                  <span className="text-sm text-stackable-muted">Price</span>
+                  <span className="text-lg font-bold font-[family-name:var(--font-jetbrains)] text-stackable-accent">
                     2 {selectedAsset}
                   </span>
                 </div>
-                <p className="text-xs text-forge-muted/60 mt-1">
+                <p className="text-xs text-stackable-muted/60 mt-1">
                   Paid via x402 protocol on Stacks blockchain
                 </p>
               </div>
@@ -238,8 +238,8 @@ export function PaymentModal() {
             {/* State-specific content */}
             {paymentState === "connecting" && (
               <div className="flex flex-col items-center gap-3 py-4">
-                <Loader2 className="w-8 h-8 text-forge-purple animate-spin" />
-                <p className="text-sm text-forge-muted">
+                <Loader2 className="w-8 h-8 text-stackable-accent animate-spin" />
+                <p className="text-sm text-stackable-muted">
                   Connecting to wallet...
                 </p>
               </div>
@@ -248,16 +248,16 @@ export function PaymentModal() {
             {paymentState === "signing" && (
               <div className="space-y-4">
                 {walletAddress && (
-                  <div className="flex items-center gap-2 p-3 rounded-lg bg-forge-charcoal border border-forge-border">
-                    <Wallet className="w-4 h-4 text-emerald-400" />
-                    <span className="text-xs text-forge-muted font-mono truncate">
+                  <div className="flex items-center gap-2 p-3 rounded-[14px] bg-stackable-charcoal border border-stackable-border">
+                    <Wallet className="w-4 h-4 text-emerald-600" />
+                    <span className="text-xs text-stackable-muted font-mono truncate">
                       {walletAddress}
                     </span>
                   </div>
                 )}
                 <button
                   onClick={handleSign}
-                  className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-forge-orange text-forge-charcoal font-semibold rounded-lg hover:bg-forge-orange/90 transition-all"
+                  className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-stackable-accent text-white font-semibold rounded-full hover:bg-stackable-accent/90 transition-all"
                 >
                   <Wallet className="w-4 h-4" />
                   Sign & Pay 2 {selectedAsset}
@@ -267,8 +267,8 @@ export function PaymentModal() {
 
             {paymentState === "verifying" && (
               <div className="flex flex-col items-center gap-3 py-4">
-                <Loader2 className="w-8 h-8 text-forge-orange animate-spin" />
-                <p className="text-sm text-forge-muted">
+                <Loader2 className="w-8 h-8 text-stackable-accent animate-spin" />
+                <p className="text-sm text-stackable-muted">
                   Verifying payment & generating package...
                 </p>
               </div>
@@ -285,25 +285,25 @@ export function PaymentModal() {
                     damping: 15,
                   }}
                 >
-                  <CheckCircle2 className="w-16 h-16 text-emerald-400" />
+                  <CheckCircle2 className="w-16 h-16 text-emerald-500" />
                 </motion.div>
                 <div className="text-center">
-                  <p className="font-semibold text-forge-text">
+                  <p className="font-semibold text-stackable-text">
                     Download Complete!
                   </p>
-                  <p className="text-sm text-forge-muted mt-1">
+                  <p className="text-sm text-stackable-muted mt-1">
                     Your skill package has been downloaded.
                   </p>
                 </div>
-                <div className="flex items-center gap-2 p-3 rounded-lg bg-emerald-400/10 border border-emerald-400/20">
-                  <FileArchive className="w-4 h-4 text-emerald-400" />
-                  <span className="text-sm text-emerald-300">
+                <div className="flex items-center gap-2 p-3 rounded-[14px] bg-emerald-50 border border-emerald-200">
+                  <FileArchive className="w-4 h-4 text-emerald-600" />
+                  <span className="text-sm text-emerald-700">
                     {metadata.name || "skill"}.zip
                   </span>
                 </div>
                 <button
                   onClick={handleDismissAfterSuccess}
-                  className="mt-2 px-6 py-2 text-sm text-forge-muted hover:text-forge-text border border-forge-border rounded-lg transition-colors"
+                  className="mt-2 px-6 py-2 text-sm text-stackable-muted hover:text-stackable-text border border-stackable-border rounded-full transition-colors"
                 >
                   Start New Skill
                 </button>
@@ -312,9 +312,9 @@ export function PaymentModal() {
 
             {paymentState === "error" && (
               <div className="space-y-4">
-                <div className="flex items-start gap-2 p-3 rounded-lg bg-red-400/10 border border-red-400/20">
-                  <AlertCircle className="w-4 h-4 text-red-400 mt-0.5 shrink-0" />
-                  <span className="text-sm text-red-300">
+                <div className="flex items-start gap-2 p-3 rounded-[14px] bg-red-50 border border-red-200">
+                  <AlertCircle className="w-4 h-4 text-red-500 mt-0.5 shrink-0" />
+                  <span className="text-sm text-red-700">
                     {paymentError || "An error occurred"}
                   </span>
                 </div>
@@ -323,7 +323,7 @@ export function PaymentModal() {
                     setPaymentState("connecting");
                     connectWallet();
                   }}
-                  className="w-full px-4 py-2.5 bg-forge-surface border border-forge-border text-forge-text text-sm font-medium rounded-lg hover:border-forge-muted transition-colors"
+                  className="w-full px-4 py-2.5 bg-stackable-surface border border-stackable-border text-stackable-text text-sm font-medium rounded-full hover:border-stackable-muted transition-colors"
                 >
                   Try Again
                 </button>
