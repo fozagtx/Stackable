@@ -4,7 +4,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import Image from "next/image";
-import { Sparkles, PenLine, Package, ArrowRight, ChevronDown, MessageSquare, Bot, Coins, Download } from "lucide-react";
+import { Sparkles, PenLine, Package, ArrowRight, ChevronDown, MessageSquare, Bot, Download } from "lucide-react";
 import { AnimatePresence } from "framer-motion";
 
 const features = [
@@ -78,11 +78,11 @@ export function Landing() {
               </p>
               <div className="flex items-center gap-2 mb-10">
                 <Image
-                  src="/stacks.webp"
-                  alt="Stacks"
+                  src="/logo.png"
+                  alt="Stackable"
                   width={20}
                   height={20}
-                  className="inline-block"
+                  className="inline-block rounded-full"
                 />
                 <p className="text-sm text-stackable-muted/60">
                   Stacks &middot; Pay with STX &middot; x402
@@ -95,12 +95,6 @@ export function Landing() {
                 >
                   Start Building
                   <ArrowRight className="w-4 h-4" />
-                </Link>
-                <Link
-                  href="/editor"
-                  className="inline-flex items-center justify-center gap-2.5 px-10 py-4 bg-stackable-surface text-stackable-text font-medium rounded-full shadow-cr hover:shadow-lg transition-all"
-                >
-                  Explore Templates
                 </Link>
               </div>
             </motion.div>
@@ -119,26 +113,27 @@ export function Landing() {
                       icon: MessageSquare,
                       label: "Prompt",
                       detail: "\"Create a code review skill...\"",
-                      color: "bg-blue-500",
+                      color: "bg-[#f5f5f5]",
                     },
                     {
                       icon: Bot,
                       label: "Agent Builds",
                       detail: "Agent creates your skill",
-                      color: "bg-stackable-accent",
+                      color: "bg-[#f5f5f5]",
                     },
                     {
-                      icon: Coins,
+                      icon: null,
                       label: "Pay with STX",
                       detail: "Micropayment via Stacks",
-                      color: "bg-purple-500",
+                      color: "bg-[#f5f5f5]",
                       stacks: true,
+                      useLogo: true,
                     },
                     {
                       icon: Download,
                       label: "Download",
                       detail: "Ready-to-install package",
-                      color: "bg-emerald-500",
+                      color: "bg-[#f5f5f5]",
                     },
                   ].map((step, i) => (
                     <motion.div
@@ -159,7 +154,17 @@ export function Landing() {
                             delay: i * 0.5,
                           }}
                         >
-                          <step.icon className="w-5 h-5 text-white" />
+                          {step.useLogo ? (
+                            <Image
+                              src="/logo.png"
+                              alt="Stackable"
+                              width={24}
+                              height={24}
+                              className="rounded-full"
+                            />
+                          ) : (
+                            <step.icon className="w-5 h-5 text-stackable-text" />
+                          )}
                         </motion.div>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2">
@@ -168,10 +173,11 @@ export function Landing() {
                             </p>
                             {step.stacks && (
                               <Image
-                                src="/stacks.webp"
-                                alt="Stacks"
+                                src="/logo.png"
+                                alt="Stackable"
                                 width={16}
                                 height={16}
+                                className="rounded-full"
                               />
                             )}
                           </div>
@@ -194,15 +200,19 @@ export function Landing() {
                         )}
                       </div>
                       {i < 3 && (
-                        <motion.div
-                          className="ml-5 w-px h-3 bg-stackable-border my-1"
-                          animate={{ opacity: [0.3, 0.8, 0.3] }}
-                          transition={{
-                            duration: 1.5,
-                            repeat: Infinity,
-                            delay: i * 0.25,
-                          }}
-                        />
+                        <div className="ml-5 my-1 relative h-4 w-px">
+                          <div className="absolute inset-0 bg-stackable-border/30" />
+                          <motion.div
+                            className="absolute top-0 left-0 w-full h-2 bg-gradient-to-b from-stackable-accent to-transparent rounded-full"
+                            animate={{ top: ["-50%", "100%"] }}
+                            transition={{
+                              duration: 1.2,
+                              repeat: Infinity,
+                              delay: i * 0.4,
+                              ease: "easeInOut",
+                            }}
+                          />
+                        </div>
                       )}
                     </motion.div>
                   ))}
