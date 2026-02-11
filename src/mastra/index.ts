@@ -5,5 +5,5 @@ import { skillCreatorAgent } from "./agents";
 
 export const mastra = new Mastra({
   agents: { skillCreatorAgent },
-  logger: new ConsoleLogger("Mastra", { level: "info" }),
+  logger: new ConsoleLogger({ level: "info" }),
 });

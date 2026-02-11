@@ -18,8 +18,7 @@ export const createSkillTool = createTool({
       version: z.string(),
     }),
   }),
-  execute: async ({ context }) => {
-    const { content } = context;
+  execute: async ({ content }) => {
 
     const nameMatch = content.match(/name:\s*(.+)/);
     const descMatch = content.match(/description:\s*"?([^"\n]+)"?/);
