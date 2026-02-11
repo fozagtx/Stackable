@@ -9,8 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@ai-sdk/openai": "^3.0.26",
-    "@mastra/core": "^0.6.3",
+    "@ai-sdk/openai": "^1.2.1",
+    "@mastra/core": "^1.3.0",
     "@monaco-editor/react": "^4.7.0",
     "@stacks/connect": "^8.2.4",
     "framer-motion": "^12.34.0",
@@ -20,6 +20,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "x402-stacks": "^2.0.1",
+    "zod": "^3.25.0",
     "zustand": "^5.0.11"
   },
   "devDependencies": {
@@ -29,8 +30,11 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "buffer": "^6.0.3",
+    "crypto-browserify": "^3.12.1",
     "eslint": "^9",
     "eslint-config-next": "15.2.3",
+    "stream-browserify": "^3.0.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

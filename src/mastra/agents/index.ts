@@ -1,9 +1,9 @@
 import { Agent } from "@mastra/core/agent";
-import { openai } from "@ai-sdk/openai";
 import { createSkillTool } from "../tools";
 
 export const skillCreatorAgent = new Agent({
   name: "Skill Creator",
+  id: "skillCreatorAgent",
   tools: { createSkillTool },
   instructions: `You are a Claude Code skill creator. You create well-structured Claude Code skills that follow the exact format below.
 
@@ -40,6 +40,8 @@ description: "Brief description of what the skill does"
 - Limitations and constraints
 
 Rules:
+- Output ONLY the raw markdown skill content. No preamble, no explanations, no conversational text, no code fences wrapping the output.
+- Start your response directly with the --- frontmatter delimiter.
 - Always include YAML frontmatter with name and description
 - The name field should be kebab-case
 - Include all sections: Triggers, Usage, Behavioral Flow, Examples, Boundaries
@@ -47,5 +49,5 @@ Rules:
 - Include realistic examples
 - Set clear boundaries to prevent misuse
 - Use markdown formatting consistently`,
-  model: openai("gpt-4o"),
+  model: "openai/gpt-4o",
 });

@@ -1,8 +1,27 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   serverExternalPackages: ["@mastra/*", "x402-stacks", "@stacks/transactions"],
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        crypto: false,
+        stream: false,
+        buffer: false,
+      };
+    }
+    return config;
+  },
+  experimental: {
+    turbo: {
+      resolveAlias: {
+        crypto: "crypto-browserify",
+        stream: "stream-browserify",
+        buffer: "buffer",
+      },
+    },
+  },
   env: {
     OPENAI_API_KEY: process.env.OPENAI_API_KEY,
     STACKABLE_WALLET_ADDRESS: process.env.STACKABLE_WALLET_ADDRESS,
