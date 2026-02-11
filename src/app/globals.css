@@ -19,7 +19,7 @@
   /* Content Rewards palette */
   --color-stackable-accent: #FF6207;
   --color-stackable-accent-soft: #FF9E59;
-  --color-stackable-charcoal: #F7F7F7;
+  --color-stackable-charcoal: #F5F5F5;
   --color-stackable-surface: #FFFFFF;
   --color-stackable-border: #E3E3E3;
   --color-stackable-text: #0A0A0A;
@@ -35,7 +35,7 @@
 }
 
 body {
-  background: #F7F7F7;
+  background: #F5F5F5;
   color: #0A0A0A;
 }
 
@@ -54,4 +54,53 @@ body {
     radial-gradient(circle, rgba(255,98,7,0.25) 1.2px, transparent 1.2px),
     linear-gradient(160deg, rgba(255,98,7,0.18) 0%, rgba(255,158,89,0.1) 40%, rgba(255,255,255,0) 70%);
   background-size: 6px 6px, 100% 100%;
+}
+
+/* Glossy fluid border — soft organic glow */
+.card-glossy {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.card-glossy::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  padding: 1.5px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 98, 7, 0.5) 0%,
+    rgba(255, 158, 89, 0.25) 25%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 158, 89, 0.25) 75%,
+    rgba(255, 98, 7, 0.4) 100%
+  );
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.card-glossy::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: 21px;
+  background: radial-gradient(
+    ellipse at 30% 0%,
+    rgba(255, 98, 7, 0.15) 0%,
+    transparent 60%
+  ),
+  radial-gradient(
+    ellipse at 70% 100%,
+    rgba(255, 158, 89, 0.1) 0%,
+    transparent 60%
+  );
+  pointer-events: none;
+  filter: blur(8px);
+  z-index: -1;
 }

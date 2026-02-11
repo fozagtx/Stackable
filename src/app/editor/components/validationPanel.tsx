@@ -13,7 +13,7 @@ export function ValidationPanel() {
           Validation
         </h3>
         <p className="text-xs text-stackable-muted/60">
-          Start editing or generate a skill to see validation results.
+          Start editing or create a skill to see validation results.
         </p>
       </div>
     );

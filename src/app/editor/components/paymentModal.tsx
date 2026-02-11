@@ -269,7 +269,7 @@ export function PaymentModal() {
               <div className="flex flex-col items-center gap-3 py-4">
                 <Loader2 className="w-8 h-8 text-stackable-accent animate-spin" />
                 <p className="text-sm text-stackable-muted">
-                  Verifying payment & generating package...
+                  Verifying payment & creating package...
                 </p>
               </div>
             )}

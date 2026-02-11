@@ -1,6 +1,6 @@
 # Stackable
 
-Next.js + Mastra AI recipe assistant powered by Amazon Bedrock (Claude 3.5 Sonnet).
+A marketplace for creating, previewing, and selling Claude Code skills. Write skills in a Monaco editor, generate with AI, and distribute via Stacks micropayments.
 
 ## Setup
 
@@ -16,9 +16,11 @@ Open [http://localhost:3000](http://localhost:3000).
 
 See `.env.example` for required variables:
 
-- `REGION` - AWS region
-- `ACCESS_KEY_ID`, `SECRET_ACCESS_KEY`, `SESSION_TOKEN` - AWS credentials
-- `PUBLICK_KEY`, `SECRET_KEY`, `BASE_URL` - Langfuse telemetry (optional)
+- `OPENAI_API_KEY` — OpenAI API key for skill generation
+- `STACKABLE_WALLET_ADDRESS` — Stacks wallet for receiving payments
+- `X402_FACILITATOR_URL` — x402 facilitator endpoint
+- `X402_NETWORK` — Stacks network identifier
+- `SKILL_PRICE_STX` — Price in micro-STX
 
 ## Scripts
 

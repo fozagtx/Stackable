@@ -9,17 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@ai-sdk/amazon-bedrock": "^2.1.5",
-    "@aws-sdk/credential-providers": "^3.768.0",
+    "@ai-sdk/openai": "^3.0.26",
     "@mastra/core": "^0.6.3",
     "@monaco-editor/react": "^4.7.0",
     "@stacks/connect": "^8.2.4",
     "framer-motion": "^12.34.0",
     "jszip": "^3.10.1",
-    "langfuse-vercel": "^3.37.0",
     "lucide-react": "^0.563.0",
     "next": "15.2.3",
-    "openai": "^6.21.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "x402-stacks": "^2.0.1",

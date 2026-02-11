@@ -1,4 +1,4 @@
-import type { SkillPackageData } from "./zip-generator";
+import type { SkillPackageData } from "./zipCreator";
 
 interface StoredSkill {
   data: SkillPackageData;

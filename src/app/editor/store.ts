@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { validateSkillContent, type ValidationResult } from "@/lib/skill-validator";
+import { validateSkillContent, type ValidationResult } from "@/lib/skillValidator";
 
 export type PaymentState =
   | "idle"
@@ -26,8 +26,8 @@ interface StackableState {
   skillContent: string;
   metadata: { name: string; description: string; version: string };
   activeFile: ActiveFile;
-  isGenerating: boolean;
-  generateError: string | null;
+  isCreating: boolean;
+  createError: string | null;
 
   // Validation
   validation: ValidationResult;
@@ -43,8 +43,8 @@ interface StackableState {
   setSkillContent: (content: string) => void;
   setMetadata: (metadata: { name: string; description: string; version: string }) => void;
   setActiveFile: (file: ActiveFile) => void;
-  setIsGenerating: (generating: boolean) => void;
-  setGenerateError: (error: string | null) => void;
+  setIsCreating: (creating: boolean) => void;
+  setCreateError: (error: string | null) => void;
   setPaymentState: (state: PaymentState) => void;
   setPaymentError: (error: string | null) => void;
   setSkillId: (id: string | null) => void;
@@ -58,8 +58,8 @@ export const useStackableStore = create<StackableState>((set) => ({
   skillContent: "",
   metadata: { name: "", description: "", version: "1.0.0" },
   activeFile: "skill",
-  isGenerating: false,
-  generateError: null,
+  isCreating: false,
+  createError: null,
   validation: { valid: true, errors: [], warnings: [] },
   paymentState: "idle",
   paymentError: null,
@@ -82,8 +82,8 @@ export const useStackableStore = create<StackableState>((set) => ({
 
   setMetadata: (metadata) => set({ metadata }),
   setActiveFile: (file) => set({ activeFile: file }),
-  setIsGenerating: (generating) => set({ isGenerating: generating }),
-  setGenerateError: (error) => set({ generateError: error }),
+  setIsCreating: (creating) => set({ isCreating: creating }),
+  setCreateError: (error) => set({ createError: error }),
   setPaymentState: (state) => set({ paymentState: state }),
   setPaymentError: (error) => set({ paymentError: error }),
   setSkillId: (id) => set({ skillId: id }),
@@ -97,8 +97,8 @@ export const useStackableStore = create<StackableState>((set) => ({
       skillContent: "",
       metadata: { name: "", description: "", version: "1.0.0" },
       activeFile: "skill",
-      isGenerating: false,
-      generateError: null,
+      isCreating: false,
+      createError: null,
       validation: { valid: true, errors: [], warnings: [] },
       paymentState: "idle",
       paymentError: null,

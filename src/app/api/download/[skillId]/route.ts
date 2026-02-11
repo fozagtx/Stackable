@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getPaymentRequirements, verifyAndSettlePayment } from "@/lib/x402";
-import { generateSkillZip, type SkillPackageData } from "@/lib/zip-generator";
-import { skillStore } from "@/lib/skill-store";
+import { createSkillZip, type SkillPackageData } from "@/lib/zipCreator";
+import { skillStore } from "@/lib/skillStore";
 
 export async function POST(
   request: NextRequest,
@@ -67,9 +67,9 @@ export async function GET(
     );
   }
 
-  // Payment verified — generate ZIP
+  // Payment verified — create ZIP
   try {
-    const zipBuffer = await generateSkillZip(skillData);
+    const zipBuffer = await createSkillZip(skillData);
     const fileName = `${skillData.metadata.name || "skill"}.zip`;
 
     // Clean up stored skill
@@ -84,9 +84,9 @@ export async function GET(
       },
     });
   } catch (error) {
-    console.error("ZIP generation error:", error);
+    console.error("ZIP creation error:", error);
     return NextResponse.json(
-      { error: "Failed to generate skill package" },
+      { error: "Failed to create skill package" },
       { status: 500 }
     );
   }

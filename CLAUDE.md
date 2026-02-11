@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Next.js + Mastra AI agent application that generates cooking recipes using Amazon Bedrock (Claude 3.5 Sonnet). Observability through Langfuse.
+Stackable — a Next.js marketplace for creating, previewing, and selling Claude Code skills (.md files). Users write skills in a Monaco editor, generate them with OpenAI GPT-4o, and download via x402 Stacks micropayments.
 
 ## Commands
 
@@ -18,30 +18,34 @@ bun run lint                        # ESLint
 
 ## Architecture
 
-### Request Flow
-1. `page.tsx` (Server Component) renders `CookingForm` client component
-2. `page.client.tsx` uses `useActionState` to call server action on form submit
-3. `actions.ts` ("use server") gets `CookingAgent` from Mastra, calls `agent.generate()`
-4. Mastra agent uses Bedrock client to call Claude 3.5 Sonnet on Amazon Bedrock
-5. Response flows back through server action to client
+### Key Routes
+- `/` — Landing page
+- `/editor` — Monaco-based skill editor with live preview
+
+### API Routes
+- `/api/createSkill` — Mastra skillCreatorAgent (OpenAI GPT-4o) skill creation
+- `/api/download/[skillId]` — x402-gated ZIP download (Stacks micropayment)
 
 ### Key Directories
-- `src/mastra/agents/` - Mastra agent definitions. Register new agents in `src/mastra/index.ts`
-- `src/mastra/tools/` - Mastra tools (e.g., weather tool using Open-Meteo API)
-- `src/lib/` - Shared utilities (Bedrock client with dev/prod credential switching)
-- `src/app/` - Next.js App Router pages and server actions
+- `src/app/` — Next.js App Router pages and API routes
+- `src/app/editor/` — Editor page, Zustand store (`store.ts`), components
+- `src/lib/` — Shared utilities (skill store, skill templates)
+- `src/mastra/` — Mastra agent orchestration (agents, tools)
 
-### Bedrock Client (`src/lib/bedrock-client.ts`)
-- Production: uses `fromNodeProviderChain()` (ECS task role)
-- Development: uses explicit credentials from env vars
+### State Management
+- Zustand store at `src/app/editor/store.ts` — `useStackableStore`
 
-### Telemetry (`src/instrumentation.ts`)
-Next.js instrumentation hook exports OpenTelemetry traces to Langfuse via `LangfuseExporter`.
+### Payments
+- x402-stacks v2.0.1 for Stacks micropayments
+- @stacks/connect v8 for wallet connection
+- In-memory skill store with 1hr TTL at `src/lib/skill-store.ts`
 
 ## Environment Variables
-- `REGION` - AWS region (default: ap-northeast-1)
-- `ACCESS_KEY_ID`, `SECRET_ACCESS_KEY`, `SESSION_TOKEN` - AWS credentials (dev only)
-- `PUBLICK_KEY`, `SECRET_KEY`, `BASE_URL` - Langfuse configuration
+- `OPENAI_API_KEY` — OpenAI API key for skill generation
+- `STACKABLE_WALLET_ADDRESS` — Stacks wallet address for receiving payments
+- `X402_FACILITATOR_URL` — x402 facilitator endpoint
+- `X402_NETWORK` — Stacks network identifier
+- `SKILL_PRICE_STX` — Price in micro-STX
 
 ## Conventions
 - Use `bun` as the package manager
@@ -51,4 +55,4 @@ Next.js instrumentation hook exports OpenTelemetry traces to Langfuse via `Langf
 - Server actions in `actions.ts` with "use server" directive
 - Path alias: `@/*` maps to `./src/*`
 - Tailwind CSS v4 with PostCSS plugin
-- Default region: `ap-northeast-1`
+- Dynamic import Monaco to avoid SSR: `dynamic(() => import("@monaco-editor/react"), { ssr: false })`

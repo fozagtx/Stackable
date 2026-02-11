@@ -94,7 +94,7 @@ description: "Generate and test API integration code"
 ## Triggers
 - API integration requests
 - REST/GraphQL endpoint creation
-- API client code generation
+- API client code creation
 
 ## Usage
 \`\`\`
@@ -128,10 +128,10 @@ description: "Generate and test API integration code"
   {
     id: "data-analyzer",
     name: "Data Analyzer",
-    description: "A skill for analyzing data patterns and generating insights",
+    description: "A skill for analyzing data patterns and creating insights",
     content: `---
 name: data-analyze
-description: "Analyze data structures and generate insights"
+description: "Analyze data structures and create insights"
 ---
 # /data-analyze - Data Analyzer
 
@@ -171,7 +171,7 @@ description: "Analyze data structures and generate insights"
   {
     id: "custom-tool",
     name: "Custom Tool Builder",
-    description: "A skill that generates Mastra/Claude tool definitions",
+    description: "A skill that creates Mastra/Claude tool definitions",
     content: `---
 name: build-tool
 description: "Generate custom tool definitions for Claude Code or Mastra"
@@ -181,7 +181,7 @@ description: "Generate custom tool definitions for Claude Code or Mastra"
 ## Triggers
 - Tool creation requests
 - MCP server tool definitions
-- Mastra tool generation
+- Mastra tool creation
 
 ## Usage
 \`\`\`
