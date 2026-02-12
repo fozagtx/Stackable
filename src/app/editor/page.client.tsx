@@ -2,7 +2,6 @@
 
 import { useEffect, useCallback } from "react";
 import { useStackableStore } from "./store";
-import { Sidebar } from "./components/sidebar";
 import { ChatPanel } from "./components/chatPanel";
 import { FileTab } from "./components/fileTab";
 import { SkillEditor } from "./components/skillEditor";
@@ -61,8 +60,6 @@ export function EditorPage() {
 
   return (
     <div className="flex h-screen bg-stackable-charcoal">
-      <Sidebar />
-
       {/* Chat panel — left side */}
       <div className="w-80 shrink-0">
         <ChatPanel />

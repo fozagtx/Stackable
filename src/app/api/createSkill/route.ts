@@ -47,8 +47,9 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ skillContent, metadata });
   } catch (error) {
     console.error("Skill creation error:", error);
-    const message =
-      error instanceof Error ? error.message : "Internal server error";
-    return NextResponse.json({ error: message }, { status: 500 });
+    return NextResponse.json(
+      { error: "Skill creation failed. Check server logs for details." },
+      { status: 500 }
+    );
   }
 }
