@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build",
+    "build": "next build --webpack",
     "start": "next start",
     "lint": "next lint"
   },
@@ -16,7 +16,7 @@
     "framer-motion": "^12.34.0",
     "jszip": "^3.10.1",
     "lucide-react": "^0.563.0",
-    "next": "15.2.3",
+    "next": "^16.1.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "x402-stacks": "^2.0.1",
@@ -33,7 +33,7 @@
     "buffer": "^6.0.3",
     "crypto-browserify": "^3.12.1",
     "eslint": "^9",
-    "eslint-config-next": "15.2.3",
+    "eslint-config-next": "^16.1.6",
     "stream-browserify": "^3.0.0",
     "tailwindcss": "^4",
     "typescript": "^5"

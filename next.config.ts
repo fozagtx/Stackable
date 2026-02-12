@@ -13,15 +13,6 @@ const nextConfig: NextConfig = {
     }
     return config;
   },
-  experimental: {
-    turbo: {
-      resolveAlias: {
-        crypto: "crypto-browserify",
-        stream: "stream-browserify",
-        buffer: "buffer",
-      },
-    },
-  },
   env: {
     OPENAI_API_KEY: process.env.OPENAI_API_KEY,
     STACKABLE_WALLET_ADDRESS: process.env.STACKABLE_WALLET_ADDRESS,
