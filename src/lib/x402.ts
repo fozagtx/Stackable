@@ -1,4 +1,4 @@
-import { createVerifier } from "x402-stacks";
+import { createVerifier, X402PaymentVerifier } from "x402-stacks";
 
 const FACILITATOR_URL =
   process.env.X402_FACILITATOR_URL || "https://facilitator.stacksx402.com";
@@ -33,12 +33,18 @@ export async function verifyAndSettlePayment(
 ) {
   const verifier = createVerifier(FACILITATOR_URL);
 
-  const paymentPayload = JSON.parse(
+  const rawPayload = JSON.parse(
     Buffer.from(paymentSignature, "base64").toString("utf-8")
   );
 
   const requirements = getPaymentRequirements(resourceUrl);
   const paymentRequirements = requirements.accepts[0];
+
+  // Build the proper PaymentPayloadV2 structure the facilitator expects
+  const paymentPayload = X402PaymentVerifier.createPaymentPayload(
+    rawPayload.signedTransaction,
+    paymentRequirements
+  );
 
   const result = await verifier.verifyAndSettle(paymentPayload, {
     paymentRequirements,

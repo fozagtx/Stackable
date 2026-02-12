@@ -51,6 +51,7 @@ export async function GET(
     const result = await verifyAndSettlePayment(paymentSignature, resourceUrl);
 
     if (!result.success) {
+      console.error("Payment verification rejected:", result.errorReason);
       return NextResponse.json(
         {
           error: "Payment verification failed",
@@ -62,7 +63,10 @@ export async function GET(
   } catch (error) {
     console.error("Payment verification error:", error);
     return NextResponse.json(
-      { error: "Payment verification failed" },
+      {
+        error: "Payment verification failed",
+        reason: error instanceof Error ? error.message : "Unknown error",
+      },
       { status: 402 }
     );
   }
