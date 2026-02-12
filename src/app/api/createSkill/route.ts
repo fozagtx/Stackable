@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { mastra } from "@/mastra";
+import { sanitizeSkillContent } from "@/lib/skillValidator";
 
 export async function POST(request: NextRequest) {
   try {
@@ -26,14 +27,16 @@ export async function POST(request: NextRequest) {
       `Create a Claude Code skill for the following request:\n\n${userMessage}`
     );
 
-    const skillContent = result.text;
+    const rawContent = result.text;
 
-    if (!skillContent) {
+    if (!rawContent) {
       return NextResponse.json(
         { error: "Failed to create skill content" },
         { status: 500 }
       );
     }
+
+    const skillContent = sanitizeSkillContent(rawContent);
 
     const nameMatch = skillContent.match(/name:\s*(.+)/);
     const descMatch = skillContent.match(/description:\s*"?([^"\n]+)"?/);

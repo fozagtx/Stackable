@@ -14,6 +14,47 @@ const MAX_SIZE_BYTES = 5 * 1024 * 1024; // 5MB
 
 const REQUIRED_SECTIONS = ["Triggers", "Usage"];
 
+/**
+ * Sanitize LLM-generated skill content so it passes frontmatter validation.
+ * Handles common GPT-4o output quirks:
+ *  - code fence wrappers (```markdown ... ```)
+ *  - \r\n line endings
+ *  - leading whitespace / blank lines before ---
+ *  - trailing whitespace
+ */
+export function sanitizeSkillContent(raw: string): string {
+  let content = raw;
+
+  // Normalize line endings
+  content = content.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+
+  // Strip code fence wrappers (```markdown or ``` at start/end)
+  content = content.replace(/^```(?:markdown|md)?\s*\n/, "");
+  content = content.replace(/\n```\s*$/, "");
+
+  // Remove any leading blank lines / whitespace before the frontmatter
+  content = content.replace(/^\s*\n*(---)/,"$1");
+
+  // Trim trailing whitespace
+  content = content.trimEnd();
+
+  // If there's still no frontmatter but the content has name:/description: lines
+  // near the top, wrap them in --- delimiters
+  if (!content.startsWith("---")) {
+    const lines = content.split("\n");
+    const yamlEnd = lines.findIndex(
+      (l, i) => i > 0 && !l.match(/^\s*(name|description|version|author|tags):\s/)
+    );
+    if (yamlEnd > 0) {
+      const yamlLines = lines.slice(0, yamlEnd);
+      const rest = lines.slice(yamlEnd);
+      content = "---\n" + yamlLines.join("\n") + "\n---\n" + rest.join("\n");
+    }
+  }
+
+  return content;
+}
+
 export function validateSkillContent(content: string): ValidationResult {
   const errors: ValidationMessage[] = [];
   const warnings: ValidationMessage[] = [];
@@ -31,8 +72,8 @@ export function validateSkillContent(content: string): ValidationResult {
     });
   }
 
-  // Check YAML frontmatter
-  const frontmatterMatch = content.match(/^---\n([\s\S]*?)\n---/);
+  // Check YAML frontmatter (tolerant of trailing spaces on --- lines)
+  const frontmatterMatch = content.match(/^---\s*\n([\s\S]*?)\n---\s*(?:\n|$)/);
   if (!frontmatterMatch) {
     errors.push({
       type: "error",
@@ -99,7 +140,7 @@ export function extractMetadataFromContent(content: string): {
   name: string;
   description: string;
 } {
-  const frontmatterMatch = content.match(/^---\n([\s\S]*?)\n---/);
+  const frontmatterMatch = content.match(/^---\s*\n([\s\S]*?)\n---\s*(?:\n|$)/);
   if (!frontmatterMatch) {
     return { name: "untitled-skill", description: "" };
   }
