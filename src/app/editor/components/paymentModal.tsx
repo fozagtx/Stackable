@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   X,
@@ -8,6 +8,7 @@ import {
   Loader2,
   CheckCircle2,
   AlertCircle,
+  Download,
   FileArchive,
   FileCode2,
   FileJson,
@@ -32,8 +33,25 @@ export function PaymentModal() {
   } = useStackableStore();
 
   const [selectedAsset] = useState("STX");
+  const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
+  const downloadFileName = `${metadata.name || "skill"}.zip`;
+  const blobUrlRef = useRef<string | null>(null);
+
+  // Clean up blob URL on unmount
+  useEffect(() => {
+    return () => {
+      if (blobUrlRef.current) {
+        URL.revokeObjectURL(blobUrlRef.current);
+      }
+    };
+  }, []);
 
   const handleClose = () => {
+    if (blobUrlRef.current) {
+      URL.revokeObjectURL(blobUrlRef.current);
+      blobUrlRef.current = null;
+    }
+    setDownloadUrl(null);
     resetPayment();
   };
 
@@ -126,21 +144,19 @@ export function PaymentModal() {
               });
 
               if (!downloadRes.ok) {
-                throw new Error("Download failed after payment");
+                const errBody = await downloadRes.json().catch(() => null);
+                throw new Error(
+                  errBody?.error || "Download failed after payment"
+                );
               }
 
-              // Trigger browser download
+              // Store blob URL so user can download via a real click
               const blob = await downloadRes.blob();
               const url = URL.createObjectURL(blob);
-              const a = document.createElement("a");
-              a.href = url;
-              a.download = `${metadata.name || "skill"}.zip`;
-              document.body.appendChild(a);
-              a.click();
-              document.body.removeChild(a);
-              URL.revokeObjectURL(url);
+              blobUrlRef.current = url;
+              setDownloadUrl(url);
 
-              // Clear localStorage draft after successful download
+              // Clear localStorage draft after successful payment
               try {
                 localStorage.removeItem(LOCALSTORAGE_KEY);
               } catch {
@@ -168,6 +184,11 @@ export function PaymentModal() {
   };
 
   const handleDismissAfterSuccess = () => {
+    if (blobUrlRef.current) {
+      URL.revokeObjectURL(blobUrlRef.current);
+      blobUrlRef.current = null;
+    }
+    setDownloadUrl(null);
     setSkillContent("");
     resetPayment();
   };
@@ -289,18 +310,29 @@ export function PaymentModal() {
                 </motion.div>
                 <div className="text-center">
                   <p className="font-semibold text-stackable-text">
-                    Download Complete!
+                    Payment Verified!
                   </p>
                   <p className="text-sm text-stackable-muted mt-1">
-                    Your skill package has been downloaded.
+                    Click below to save your skill package.
                   </p>
                 </div>
-                <div className="flex items-center gap-2 p-3 rounded-[14px] bg-emerald-50 border border-emerald-200">
-                  <FileArchive className="w-4 h-4 text-emerald-600" />
-                  <span className="text-sm text-emerald-700">
-                    {metadata.name || "skill"}.zip
-                  </span>
-                </div>
+                {downloadUrl ? (
+                  <a
+                    href={downloadUrl}
+                    download={downloadFileName}
+                    className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-emerald-600 text-white font-semibold rounded-full hover:bg-emerald-500 transition-all shadow-lg"
+                  >
+                    <Download className="w-5 h-5" />
+                    Save {downloadFileName}
+                  </a>
+                ) : (
+                  <div className="flex items-center gap-2 p-3 rounded-[14px] bg-emerald-50 border border-emerald-200">
+                    <FileArchive className="w-4 h-4 text-emerald-600" />
+                    <span className="text-sm text-emerald-700">
+                      {downloadFileName}
+                    </span>
+                  </div>
+                )}
                 <button
                   onClick={handleDismissAfterSuccess}
                   className="mt-2 px-6 py-2 text-sm text-stackable-muted hover:text-stackable-text border border-stackable-border rounded-full transition-colors"
